@@ -1,0 +1,102 @@
+[build-system]
+requires = ["flit_core >=3.4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "{{ cookiecutter.project_slug }}"
+authors = [
+    {name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" }
+]
+readme = "README.md"
+requires-python = ">={{ cookiecutter.min_python_version }}"
+dynamic = ["version", "description"]
+
+dependencies = [
+]
+
+
+## Uncomment if using an entrypoint script
+# [project.scripts]
+# {{ cookiecutter.script_name }} = "Entrypoint"
+
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "black",
+    "isort",
+    "mypy",
+    "flit",
+    "invoke",
+    "pip-tools",
+    "ruff",
+    "bumpver",
+    "ipdb",
+]
+
+[project.urls]
+Source = "{{ cookiecutter.gitlab_url }}"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+minversion = "7.0"
+addopts = [
+    "--setup-show",
+    "-ra", # explanation of anything but passed
+    "--showlocals",
+    "--strict-config",
+    ]
+log_format = "[pytest][%(asctime)s][%(levelname)s][%(module)s] %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "[pytest][%(asctime)s][%(levelname)s][%(module)s] %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+log_level = "INFO"
+
+[tool.black]
+line-length = 120
+target-version = ['py{{ cookiecutter.min_python_version.replace(".", "") }}']
+ignore = "E203"
+include = '\.pyi?$'
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
+'''
+
+[tool.isort]
+profile = "black"
+
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.bumpver]
+current_version = "0.0.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "v{new_version}"
+tag_scope = "default"
+pre_commit_hook = ""
+post_commit_hook = ""
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+]
+"src/{{ cookiecutter.project_slug }}/__init__.py" = [
+    '__version__ = "{version}"',
+]
+
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]

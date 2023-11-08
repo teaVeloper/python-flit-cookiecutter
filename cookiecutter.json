@@ -1,0 +1,9 @@
+{
+  "project_name": "",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+  "author": "author",
+  "email": "email",
+  "min_python_version": "3.9",
+  "gitlab_url": "https://replace_me",
+  "script_name": "{{ cookiecutter.project_slug }}"
+}
