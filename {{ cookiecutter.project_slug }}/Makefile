@@ -32,7 +32,7 @@ clean:
 	${INVOKE} clean
 
 delete_venv:
-	rm -rf .venv
+	rm -rf ${VENV}
 
 distclean: clean delete_venv
 # delete venv
