@@ -6,11 +6,14 @@ else
 	VENV_COMMAND := python -m venv
 endif
 
-VENV_PATH := .venv
-INVOKE := ${VENV_PATH}/bin/invoke
-PIP := ${VENV_PATH}/bin/python -m pip
-PYTHON := ${VENV_PATH}/bin/python
-FLIT := ${VENV_PATH}/bin/flit
+VENV := .venv
+# VENV can be overwritten and all else should work accordingly
+# support for virtualenvwrapper with venv names will come!
+INVOKE := ${VENV}/bin/invoke
+PIP := ${VENV}/bin/python -m pip
+PYTHON := ${VENV}/bin/python
+FLIT := ${VENV}/bin/flit
+PYTEST := ${VENV}/bin/pytest
 
 # all:
 
@@ -19,7 +22,7 @@ FLIT := ${VENV_PATH}/bin/flit
 install:
 # create venv and install program in there
 # use virtualenv if available, fallback to venv if not
-	${VENV_COMMAND} ${VENV_PATH}
+	${VENV_COMMAND} ${VENV}
 	${PIP} install flit
 	${FLIT} install -s
 
@@ -56,4 +59,4 @@ check:
 	${INVOKE} code-quality
 
 test-debug:
-	pytest --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb
+	${PYTEST} --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb
